@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion Production · Logos e elementos</title>
+<style>
+body { margin:0; padding:28px; background:#102c31; color:#f8f5e9; font:16px system-ui,sans-serif; }
+main { max-width:1120px; margin:auto; }
+h1 { margin:0 0 12px; font-size:32px; }
+p { line-height:1.6; }
+a { color:#a4f1cd; }
+section { margin:28px 0; padding:22px; background:#1c3e41; border-radius:18px; }
+h2 { font-size:22px; margin-top:0; }
+.contact { max-width:100%; max-height:900px; display:block; object-fit:contain; object-position:left; }
+.preview { max-height:380px; max-width:100%; display:block; margin-top:16px; }
+input { width:100%; margin:16px 0; }
+label, output { display:block; }
+.missing { color:#f8d18c; }
+</style>
+<main>
+<h1>Logos e animação de elementos</h1>
+<p>Oito posts acessados em 19/11/2026. As folhas de contato mostram amostras. A navegação individual consulta os 2.102 frames extraídos com seus timestamps originais.</p>
+<p>Para materializar as imagens, executar <code>python scripts/prepare_reference_frames.py</code> na pasta da skill. Consultar <a href="../../references/logo-elements.md">a análise e a matriz de estilo</a>. As imagens são referências de terceiros para estudo.</p>
+<div id="catalog"></div>
+</main>
+<script src="catalog.js"></script>
+<script>
+const holder = document.querySelector('#catalog');
+for (const source of PINTEREST_CATALOG.sources) {
+    const section = document.createElement('section');
+    const heading = document.createElement('h2');
+    heading.textContent = source.key.toUpperCase() + ' · ' + source.title;
+    const link = document.createElement('a');
+    link.href = source.source;
+    link.textContent = 'Abrir post original';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    const counts = document.createElement('p');
+    counts.textContent = source.frame_count + ' frames · ' + source.fps.toFixed(3) + ' fps';
+    const contactLink = document.createElement('a');
+    contactLink.href = source.contact_sheet;
+    const contact = document.createElement('img');
+    contact.className = 'contact';
+    contact.loading = 'lazy';
+    contact.src = source.contact_sheet;
+    contact.alt = 'Folha de contato com quadros e tempos de ' + source.key;
+    contactLink.append(contact);
+    const label = document.createElement('label');
+    label.textContent = 'Consultar frame';
+    const slider = document.createElement('input');
+    slider.type = 'range';
+    slider.min = 0;
+    slider.max = source.frames.length - 1;
+    slider.step = 1;
+    slider.value = 0;
+    label.append(slider);
+    const output = document.createElement('output');
+    const preview = document.createElement('img');
+    preview.className = 'preview';
+    const missing = document.createElement('p');
+    missing.className = 'missing';
+    preview.onerror = () => {
+        preview.hidden = true;
+        missing.textContent = 'Extrair frames.zip com o script para abrir este quadro.';
+    };
+    preview.onload = () => {
+        preview.hidden = false;
+        missing.textContent = '';
+    };
+    function update() {
+        const frame = source.frames[Number(slider.value)];
+        output.textContent = 'Frame ' + frame.index + ' · ' + frame.time.toFixed(5)
+            + ' s · ' + frame.phase;
+        preview.alt = output.textContent;
+        preview.src = frame.file.replace('assets/pinterest-logos/', '');
+    }
+    slider.addEventListener('input', update);
+    section.append(heading, link, counts, contactLink, label, output, preview, missing);
+    holder.append(section);
+    update();
+}
+</script>
+</html>

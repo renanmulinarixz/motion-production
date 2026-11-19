@@ -1,0 +1,4 @@
+interface:
+  display_name: "Motion Production"
+  short_description: "Motion diverso com Astra e ferramentas disponíveis"
+  default_prompt: "Use $motion-production para criar ou revisar este motion, escolhendo a linguagem visual e a implementação conforme o briefing e as ferramentas disponíveis."

@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="pt-BR"><meta charset="utf-8"><title>Diversificar — 20 segundos</title><style>*{box-sizing:border-box}body{margin:0;background:#081719;color:#e6efde;font:15px Arial;padding:20px}main{max-width:1440px;margin:auto}canvas{width:100%;display:block;border-radius:18px}nav{display:flex;gap:12px;align-items:center;padding:20px 0}button{border:0;background:#c4f57e;color:#102b22;border-radius:30px;padding:12px 22px;cursor:pointer}input{flex:1}p{color:#9aaeaa;line-height:1.6}body.render{padding:0}body.render canvas{width:1440px;border-radius:0}body.render nav,body.render p{display:none}</style><main><canvas id="stage" width="1440" height="810" aria-label="Demonstração de concentração e distribuição de investimentos"></canvas><nav><button id="play">Reproduzir</button><button id="restart">Reiniciar</button><input id="seek" type="range" min="0" max="20" step=".01" value="0" aria-label="Tempo"><span id="time">0 / 20 s</span></nav><p>20 segundos. Sem áudio. Carteira fictícia e distribuição ilustrativa, sem recomendação de produtos ou proporções. Diversificar não garante lucro nem evita perdas.</p></main><script>'use strict';
+const c=document.getElementById('stage'),ctx=c.getContext('2d'),W=1440,H=810,D=20;
+const C={ink:'#152b2d',paper:'#f6f7ee',mint:'#c4f57e'};
+const clamp=x=>Math.max(0,Math.min(1,x)),mix=(a,b,p)=>a+(b-a)*p;
+function smooth(a,b,t){const x=clamp((t-a)/(b-a));return x*x*x*(x*(x*6-15)+10)}
+function out(a,b,t){const x=clamp((t-a)/(b-a));return 1-Math.pow(1-x,4)}
+function win(t,a,b,c,d){return smooth(a,b,t)*(1-smooth(c,d,t))}
+function alpha(a,fn){if(a<=0)return;ctx.save();ctx.globalAlpha*=clamp(a);fn();ctx.restore()}
+function box(x,y,w,h,r,fill,stroke=null,lw=1){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke()}}
+function disk(x,y,r,fill){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=fill;ctx.fill()}
+function line(x1,y1,x2,y2,color,width=2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineCap='round';ctx.stroke()}
+function txt(str,x,y,size=32,color=C.ink,weight=500,align='left'){ctx.font=weight+' '+size+'px Arial,sans-serif';ctx.textAlign=align;ctx.textBaseline='alphabetic';ctx.fillStyle=color;ctx.fillText(str,x,y)}
+function grad(x1,y1,x2,y2,stops){const g=ctx.createLinearGradient(x1,y1,x2,y2);for(const[s,col]of stops)g.addColorStop(s,col);return g}
+function stateAt(time){
+ const t=Math.max(0,Math.min(D,time)),focus=win(t,2.35,3.35,6.5,7.25),expand=smooth(7.7,9.2,t),final=smooth(14.35,15.5,t),split=smooth(8.5,10.85,t);
+ const w=mix(600,1100,expand),h=mix(525,390,expand);
+ const pose={x:mix(mix(750,611,focus),170,expand),y:mix(mix(141,104,focus),253,expand),scale:mix(mix(.98,1.14,focus),1,expand),angle:(1-expand)*(1-focus)*(-.018)};
+ pose.x=mix(pose.x,280,final);pose.y=mix(pose.y,316,final);pose.scale=mix(pose.scale,.8,final);
+ const nodes=[];
+ for(let i=0;i<6;i++){const p=smooth(8.8+i*.08,10.8+i*.08,t),group=Math.floor(i/2);nodes.push({id:'coin'+i,group,x:mix(90+i*84,190+group*360+(i%2?48:-48),p),y:mix(310,247,p)-Math.sin(p*Math.PI)*(43+group*8),radius:32,turn:Math.sin(p*Math.PI)*(.12+i*.025)});}
+ const approach=out(.45,1.75,t),toButton=smooth(6.05,7.05,t);
+ const cursor={x:mix(mix(636,532,approach),447,toButton),y:mix(mix(530,242,approach),464,toButton),opacity:win(t,.35,.7,7.85,8.35),press:win(t,7.32,7.4,7.48,7.62)};
+ return{t,focus,expand,final,split,width:w,height:h,pose,nodes,cursor};
+}
+function coin(n){
+ ctx.save();ctx.translate(n.x,n.y);ctx.rotate(n.turn);ctx.scale(1-Math.abs(n.turn)*.27,1);
+ ctx.save();ctx.shadowColor='#172b2d38';ctx.shadowBlur=11;ctx.shadowOffsetY=10;disk(0,2,32,'#b69344');ctx.restore();
+ disk(0,2,32,grad(-30,-25,26,32,[[0,'#d4af54'],[.5,'#b78731'],[1,'#edcb70']]));
+ disk(0,-2,31,grad(-20,-30,25,30,[[0,'#fff4b8'],[.4,'#f6d984'],[1,'#d8ac4b']]));
+ ctx.beginPath();ctx.arc(0,-2,24.5,0,Math.PI*2);ctx.strokeStyle='#a8823d88';ctx.lineWidth=1.5;ctx.stroke();
+ ctx.beginPath();ctx.arc(0,-2,27,-Math.PI*.9,-Math.PI*.25);ctx.strokeStyle='#fff9cecc';ctx.lineWidth=2;ctx.stroke();
+ txt('$',0,9,33,'#fff4bc',700,'center');txt('$',0,8,33,'#8b6b2c',700,'center');ctx.restore();
+}
+function pointer(s){
+ const p=s.cursor;alpha(p.opacity,()=>{
+ const pulse=clamp((s.t-7.4)/.48);
+ if(s.t>=7.4&&pulse<1)alpha(1-pulse,()=>{ctx.beginPath();ctx.arc(447,464,12+pulse*36,0,Math.PI*2);ctx.strokeStyle='#579330';ctx.lineWidth=3;ctx.stroke()});
+ ctx.save();ctx.translate(p.x,p.y);ctx.scale(1-p.press*.13,1-p.press*.13);
+ ctx.shadowColor='#0005';ctx.shadowBlur=8;ctx.shadowOffsetY=5;
+ ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(2,35);ctx.lineTo(12,26);ctx.lineTo(22,44);ctx.lineTo(30,39);ctx.lineTo(21,23);ctx.lineTo(35,20);ctx.closePath();ctx.fillStyle='#17322e';ctx.fill();ctx.shadowColor='transparent';ctx.strokeStyle='#ffffff';ctx.lineWidth=2.8;ctx.lineJoin='round';ctx.stroke();ctx.restore();
+ });
+}
+function app(s){
+ const {t,width:w,height:h,split}=s;
+ ctx.save();ctx.shadowColor='#0008';ctx.shadowBlur=55;ctx.shadowOffsetY=28;box(0,0,w,h,28,C.paper);ctx.restore();
+ box(0,0,w,h,28,grad(0,0,w,h,[[0,'#fffff7'],[1,'#ecf0e6']]),'#ffffffcc',1.5);
+ line(25,66,w-25,66,'#dce3d8',1);
+ box(28,22,25,25,8,'#203e37');line(34,36,39,41,C.mint,2);line(39,41,47,29,C.mint,2);
+ txt('Minha carteira',68,42,25,C.ink,700);txt('Visão geral',w-30,41,18,'#849087',500,'right');
+ alpha(1-smooth(7.8,8.55,t),()=>{
+ txt('Distribuição atual',30,110,24,'#687b72',500);txt('Investimento A',39,184,30,C.ink,700);txt('Toda a carteira',40,224,22,'#6a7c72',500);
+ box(365,134,204,118,20,'#d9edbe');txt('100%',548,213,76,C.ink,700,'right');
+ });
+ const centers=[190,550,910],fills=['#e3ecd8','#e1e9ef','#f1e7d6'],edges=['#c5d6b4','#c5d3df','#dfcfae'];
+ for(const j of[0,2,1]){
+ const center=mix(300,centers[j],split),pw=mix(540,320,split),y=mix(266,114,split),ph=mix(101,208,split);
+ box(center-pw/2,y,pw,ph,21,fills[j],edges[j],1);
+ alpha(smooth(10.45,11.05,t),()=>{txt('Tipo '+['A','B','C'][j],center,159,26,C.ink,700,'center');line(center-28,176,center+28,176,edges[j],2)});
+ }
+ for(const n of s.nodes)coin(n);
+ alpha(1-smooth(7.65,8.2,t),()=>{
+ txt('1 investimento',32,409,23,'#758577',500);
+ const hover=smooth(6.8,7.12,t),press=s.cursor.press;
+ box(29,437,542,58,15,'#e6ebdf');txt('Simular distribuição',54,474,24,C.ink,700);
+ box(410,443+press*2,151,46-press*2,12,hover>.1?C.mint:'#d4e5be');txt('Testar',481,474,22,C.ink,700,'center');
+ });
+ alpha(smooth(11.0,11.65,t),()=>txt('Investimentos diferentes',w/2,362,24,'#6d8076',500,'center'));
+ const spotlight=win(t,2.0,2.9,6.2,6.85);
+ alpha(spotlight*.22,()=>{ctx.fillStyle='#17372f';ctx.fillRect(0,67,w,58);ctx.fillRect(0,125,355,135);ctx.fillRect(577,125,w-577,135);ctx.fillRect(0,260,w,h-260)});
+ alpha(spotlight,()=>{box(362,131,210,124,23,null,'#669b38',2.5);const u=out(3.0,3.55,t);line(403,237,403+140*u,237,'#76a947',3)});
+ pointer(s);
+}
+function reveal(str,x,y,size,col,a,b,t,align='left',weight=750){
+ const p=out(a,b,t);if(p<=0)return;ctx.save();ctx.beginPath();ctx.rect(0,y-size-8,W,size+27);ctx.clip();ctx.translate(0,(1-p)*(size+26));txt(str,x,y,size,col,weight,align);ctx.restore();
+}
+function titleGroup(t,a,b,c,d,fn){alpha(win(t,a,b,c,d),()=>{ctx.save();ctx.translate(0,-smooth(c,d,t)*20);fn();ctx.restore()})}
+function draw(s){
+ const{t,pose}=s;ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;
+ ctx.fillStyle=grad(0,0,W,H,[[0,'#0c2023'],[.65,'#142b2c'],[1,'#253d30']]);ctx.fillRect(0,0,W,H);
+ const glow=ctx.createRadialGradient(1140,270,20,1140,270,700);glow.addColorStop(0,'#9dc87216');glow.addColorStop(1,'#8db66b00');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
+ alpha(.13,()=>{ctx.beginPath();ctx.arc(1100,410,450,0,Math.PI*2);ctx.strokeStyle='#b4d3ab';ctx.lineWidth=1;ctx.stroke();ctx.beginPath();ctx.arc(1100,410,485,0,Math.PI*2);ctx.stroke()});
+ ctx.save();ctx.translate(pose.x,pose.y);ctx.scale(pose.scale,pose.scale);ctx.rotate(pose.angle);app(s);ctx.restore();
+ titleGroup(t,-1,-.5,2.15,2.65,()=>{
+ reveal('TUDO',76,218,108,C.paper,-.6,0,t);reveal('NO MESMO',80,323,87,C.paper,-.18,.55,t);reveal('LUGAR?',75,448,128,C.mint,.03,.75,t);
+ alpha(out(.65,1.2,t),()=>{line(83,495,143,495,'#a6bdad',2);txt('Olhe para a sua carteira.',83,548,29,'#b8c8bb',500)});
+ });
+ titleGroup(t,2.65,3.0,6.15,6.65,()=>{
+ reveal('UMA',79,252,108,C.paper,2.65,3.15,t);reveal('ESCOLHA.',79,362,88,C.mint,2.8,3.35,t);
+ txt('Concentração',83,435,31,'#c4d1c4',500);txt('de risco.',83,477,31,'#c4d1c4',500);
+ });
+ titleGroup(t,6.65,6.9,7.8,8.2,()=>{reveal('E SE VOCÊ',80,272,70,C.paper,6.65,7.05,t);reveal('DISTRIBUÍSSE?',80,357,62,C.mint,6.78,7.2,t)});
+ titleGroup(t,8.2,8.5,11.65,12.1,()=>reveal('DISTRIBUA.',720,173,109,C.mint,8.2,8.85,t,'center'));
+ titleGroup(t,12.1,12.45,14.1,14.55,()=>reveal('Menos concentração.',720,169,77,C.paper,12.1,12.65,t,'center',700));
+ titleGroup(t,14.55,14.9,21,22,()=>{reveal('O RISCO',720,141,96,C.paper,14.55,15.1,t,'center');reveal('CONTINUA.',720,246,105,C.mint,14.72,15.3,t,'center')});
+ alpha(smooth(15.45,16.05,t),()=>{txt('Diversificar não garante lucro',720,708,30,C.paper,500,'center');txt('nem evita perdas.',720,748,30,'#b6c9ba',500,'center')});
+}
+function renderAt(t){const s=stateAt(t);draw(s);return s}
+window.motion={renderAt,stateAt,duration:D};renderAt(0);
+
+let current=0,playing=false,anchor=0;
+function paint(t){current=Math.min(20,Math.max(0,t));motion.renderAt(current);document.getElementById('seek').value=current;document.getElementById('time').textContent=current.toFixed(1)+' / 20 s'}
+function tick(now){if(!playing)return;paint((now-anchor)/1000);if(current>=20){playing=false;document.getElementById('play').textContent='Reproduzir'}else requestAnimationFrame(tick)}
+document.getElementById('play').onclick=()=>{if(current>=20)paint(0);playing=!playing;anchor=performance.now()-current*1000;document.getElementById('play').textContent=playing?'Pausar':'Reproduzir';if(playing)requestAnimationFrame(tick)};
+document.getElementById('restart').onclick=()=>{playing=false;paint(0);document.getElementById('play').textContent='Reproduzir'};
+document.getElementById('seek').oninput=e=>{paint(+e.target.value);anchor=performance.now()-current*1000};
+if(location.search.includes('render'))document.body.classList.add('render');
+</script></html>

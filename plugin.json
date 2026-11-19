@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "motion-production",
+  "version": "1.0.0",
+  "description": "Tool-adaptive motion design for Astra: creative direction, reference analysis, continuous animation, editable implementation, rendering and visual review across diverse projects.",
+  "author": {
+    "name": "renanmulinarixz",
+    "url": "https://github.com/renanmulinarixz"
+  },
+  "repository": "https://github.com/renanmulinarixz/motion-production",
+  "license": "MIT"
+}

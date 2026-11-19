@@ -1,0 +1,133 @@
+{
+  "project": "Atlas / data story",
+  "objective": "Mostrar a mudanca ilustrativa entre tres categorias sem alterar a escala na comparacao",
+  "output": {
+    "duration": 15,
+    "fps": 24,
+    "width": 1920,
+    "height": 1080,
+    "format": "mp4",
+    "audio": false
+  },
+  "style": {
+    "language": "Quiet editorial chart with direct annotation",
+    "palette": [
+      "#EEE9E0",
+      "#203D56",
+      "#E07148"
+    ],
+    "motion": "Tracked values and measured camera movement"
+  },
+  "entities": [
+    {
+      "id": "chart",
+      "kind": "group"
+    },
+    {
+      "id": "axis",
+      "kind": "scale",
+      "parent": "chart"
+    },
+    {
+      "id": "category-a",
+      "kind": "data",
+      "parent": "chart",
+      "values": [
+        30,
+        45
+      ]
+    },
+    {
+      "id": "category-b",
+      "kind": "data",
+      "parent": "chart",
+      "values": [
+        50,
+        35
+      ]
+    },
+    {
+      "id": "category-c",
+      "kind": "data",
+      "parent": "chart",
+      "values": [
+        20,
+        20
+      ]
+    },
+    {
+      "id": "title",
+      "kind": "text",
+      "text": "Como a distribuição mudou"
+    },
+    {
+      "id": "note",
+      "kind": "text",
+      "text": "Dados fictícios para demonstração"
+    }
+  ],
+  "beats": [
+    {
+      "start": 0,
+      "end": 3,
+      "objective": "Estabelecer categorias e escala comum",
+      "persistent_entities": [
+        "chart",
+        "axis",
+        "title"
+      ],
+      "focus_target": "chart",
+      "action": "reveal",
+      "transition": "stagger",
+      "reading_hold": 1
+    },
+    {
+      "start": 3,
+      "end": 8,
+      "objective": "Interpolar as mesmas categorias aos novos valores",
+      "persistent_entities": [
+        "category-a",
+        "category-b",
+        "category-c",
+        "axis"
+      ],
+      "focus_target": "chart",
+      "action": "update-values",
+      "transition": "continuous-data",
+      "reading_hold": 0
+    },
+    {
+      "start": 8,
+      "end": 12,
+      "objective": "Destacar a diferenca preservando a escala",
+      "persistent_entities": [
+        "chart",
+        "axis"
+      ],
+      "focus_target": "category-a",
+      "action": "annotate",
+      "transition": "linked-callout",
+      "reading_hold": 2
+    },
+    {
+      "start": 12,
+      "end": 15,
+      "objective": "Manter o resultado e a natureza ilustrativa dos dados",
+      "persistent_entities": [
+        "chart",
+        "note"
+      ],
+      "focus_target": "note",
+      "action": "hold",
+      "transition": "none",
+      "reading_hold": 2
+    }
+  ],
+  "invariants": [
+    "Common scale across comparison",
+    "Labels follow values",
+    "No change of category identity",
+    "Values are fictional"
+  ],
+  "evidence": []
+}

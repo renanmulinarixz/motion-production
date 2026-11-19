@@ -1,0 +1,118 @@
+{
+  "project": "LUMA / product launch",
+  "objective": "Apresentar um aplicativo de audio atraves de uma acao simples e sua resposta",
+  "output": {
+    "duration": 12,
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "format": "mp4",
+    "audio": {
+      "enabled": true,
+      "role": "music and causal sound",
+      "voice": null
+    }
+  },
+  "style": {
+    "language": "Bold editorial type and precise product UI",
+    "palette": [
+      "#12131A",
+      "#F4F3ED",
+      "#C5FF3D"
+    ],
+    "motion": "Object-led transitions with stable UI reading"
+  },
+  "entities": [
+    {
+      "id": "phone",
+      "kind": "group"
+    },
+    {
+      "id": "screen",
+      "kind": "interface",
+      "parent": "phone"
+    },
+    {
+      "id": "play",
+      "kind": "control",
+      "parent": "screen"
+    },
+    {
+      "id": "wave",
+      "kind": "graphic",
+      "parent": "screen"
+    },
+    {
+      "id": "headline",
+      "kind": "text",
+      "text": "Seu ritmo, em qualquer lugar."
+    },
+    {
+      "id": "signature",
+      "kind": "text",
+      "text": "LUMA"
+    }
+  ],
+  "beats": [
+    {
+      "start": 0,
+      "end": 2.5,
+      "objective": "O produto entra e estabelece a promessa",
+      "persistent_entities": [
+        "phone",
+        "headline"
+      ],
+      "focus_target": "headline",
+      "action": "reveal",
+      "transition": "object-led",
+      "reading_hold": 1
+    },
+    {
+      "start": 2.5,
+      "end": 5,
+      "objective": "Aproximar o mesmo controle sem trocar de tela",
+      "persistent_entities": [
+        "phone",
+        "screen",
+        "play"
+      ],
+      "focus_target": "play",
+      "action": "approach-and-tap",
+      "transition": "semantic-zoom",
+      "reading_hold": 0.8
+    },
+    {
+      "start": 5,
+      "end": 8.5,
+      "objective": "A onda responde ao toque mantendo relacao com o produto",
+      "persistent_entities": [
+        "phone",
+        "screen",
+        "wave"
+      ],
+      "focus_target": "wave",
+      "action": "respond-to-play",
+      "transition": "causal-expansion",
+      "reading_hold": 0
+    },
+    {
+      "start": 8.5,
+      "end": 12,
+      "objective": "Afastar e acomodar a assinatura",
+      "persistent_entities": [
+        "phone",
+        "signature"
+      ],
+      "focus_target": "signature",
+      "action": "zoom-out-and-hold",
+      "transition": "return-to-context",
+      "reading_hold": 1.8
+    }
+  ],
+  "invariants": [
+    "Exact headline and signature",
+    "Playback follows tap",
+    "Source UI remains editable"
+  ],
+  "evidence": []
+}

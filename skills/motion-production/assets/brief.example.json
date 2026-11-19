@@ -1,0 +1,102 @@
+{
+  "project": "Studio NODO / logo loop",
+  "objective": "Reconhecer a assinatura NODO como uma marca organica e acolhedora",
+  "output": {
+    "duration": 6,
+    "fps": 30,
+    "width": 1080,
+    "height": 1080,
+    "format": "mp4",
+    "loop": true,
+    "audio": false
+  },
+  "style": {
+    "language": "Organic shapes and restrained lettering",
+    "palette": [
+      "#163E37",
+      "#EAE3CE",
+      "#C87D51"
+    ],
+    "motion": "Elastic preparation, smooth convergence, quiet recognition"
+  },
+  "entities": [
+    {
+      "id": "symbol",
+      "kind": "group"
+    },
+    {
+      "id": "seed-left",
+      "kind": "shape",
+      "parent": "symbol"
+    },
+    {
+      "id": "seed-right",
+      "kind": "shape",
+      "parent": "symbol"
+    },
+    {
+      "id": "wordmark",
+      "kind": "text",
+      "text": "NODO"
+    }
+  ],
+  "beats": [
+    {
+      "start": 0,
+      "end": 1.4,
+      "objective": "Formas aproximam-se por uma trajetoria reconhecivel",
+      "persistent_entities": [
+        "seed-left",
+        "seed-right"
+      ],
+      "focus_target": "symbol",
+      "action": "converge",
+      "transition": "continuous-path",
+      "reading_hold": 0
+    },
+    {
+      "start": 1.4,
+      "end": 2.8,
+      "objective": "O simbolo encontra a proporcao final",
+      "persistent_entities": [
+        "symbol"
+      ],
+      "focus_target": "symbol",
+      "action": "settle",
+      "transition": "shape-resolution",
+      "reading_hold": 0
+    },
+    {
+      "start": 2.8,
+      "end": 4.8,
+      "objective": "Nome resolve abaixo do simbolo e permanece legivel",
+      "persistent_entities": [
+        "symbol",
+        "wordmark"
+      ],
+      "focus_target": "wordmark",
+      "action": "reveal-and-hold",
+      "transition": "masked-reveal",
+      "reading_hold": 1.4
+    },
+    {
+      "start": 4.8,
+      "end": 6,
+      "objective": "Voltar as formas iniciais para fechar a emenda",
+      "persistent_entities": [
+        "seed-left",
+        "seed-right"
+      ],
+      "focus_target": "symbol",
+      "action": "return-to-initial-state",
+      "transition": "loop",
+      "reading_hold": 0
+    }
+  ],
+  "invariants": [
+    "Exact wordmark NODO",
+    "Final symbol uses approved geometry",
+    "Loop seam checked visually"
+  ],
+  "evidence": []
+}
