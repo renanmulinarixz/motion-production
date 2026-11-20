@@ -4,6 +4,8 @@ Consultar ao criar uma abertura, uma assinatura de marca ou a transformação de
 
 ## Consulta e evidência
 
+O [atlas de intros e elementos](atlas-visual/README.md) acrescenta estudos de órbita, escrita por traço, fita dobrada e passagem de dispositivo para símbolo. A abertura do pin de fita tem uma folha própria do intervalo de 0,12 a 2,52 s, que permite comparar a deformação do ponto com o desenho da dobra.
+
 1. Abrir [o catálogo](../assets/pinterest-logos/index.html).
 2. Executar python scripts/prepare_reference_frames.py para consultar frames individuais.
 3. Localizar índice, timestamp PTS e fase no [manifesto](../assets/pinterest-logos/manifest.json).

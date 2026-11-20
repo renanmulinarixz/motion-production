@@ -40,6 +40,7 @@ Higgsfield é uma rota opcional. Ler [registro de motion nativo](references/higg
 
 ## Consultar e ampliar
 
+- [Atlas visual de intros, elementos e filmes](references/atlas-visual/README.md). Escolha a ação que precisa explicar e abra a imagem correspondente. Para um logo, marque o elemento que ainda se reconhece no meio da transformação. Para uma interface, localize o gatilho, o alvo e a resposta. Para uma transição de capítulo, defina o quadro em que a leitura recomeça. Use os tempos de uma folha de contato para localizar o gesto e dimensione a pausa pelo conteúdo da nova peça.
 - `assets/pinterest-logos/`: oito fontes, folhas de contato, ZIPs dos frames, fases e PTS no manifesto.
 - `assets/model.mp4`, `assets/frames/manifest.json` e `assets/index.html`: modelo próprio de 20 s, 600 frames e catálogo.
 - `assets/external-sources.json` e `assets/external/`: 12 registros externos, nove com imagem local.

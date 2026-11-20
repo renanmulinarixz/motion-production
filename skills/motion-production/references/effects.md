@@ -1,4 +1,6 @@
 ## 5. Receitas de efeitos
+
+O [atlas visual](atlas-visual/README.md) mostra como a função altera a escolha do efeito. Compare o anel do cronômetro com o do botão de pressão prolongada. O primeiro acompanha o tempo da cena. O segundo acompanha o contato do dedo e precisa prever o cancelamento do gesto. Para vistas explodidas e diagramas ramificados, observe quais peças mantêm posição enquanto as outras se afastam.
 Os tempos são sugestões editoriais, não recursos garantidos de todos os programas.
 
 | Código | Técnica | Como executar | Uso e limite |

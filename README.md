@@ -30,6 +30,8 @@ A tabela orienta decisões; não declara essas ferramentas instaladas ou conecta
 
 ## Uso
 
+Consulte o [atlas visual comentado](skills/motion-production/references/atlas-visual/README.md) para escolher uma referência de abertura, logotipo, gesto de interface ou transição. Cada ficha reúne uma amostra visual, a fonte e uma maneira de aplicar o mecanismo em outra peça.
+
 ```text
 Use $motion-production para criar uma vinheta de uma marca de café.
 Quero formas orgânicas, lettering legível e um loop de 6 segundos.
