@@ -1,6 +1,15 @@
 # Motion de interfaces e exemplos educativos
 
 Consultar somente para peças que demonstram aplicativos ou conteúdos semelhantes. Adaptar marca, tema e finalidade ao projeto. As seções de segurança e investimentos registram os casos BeSafe incluídos no acervo.
+
+### Ícones SVG reutilizáveis
+
+Começar pelo significado na cena. Procurar no acervo do projeto e nas bibliotecas oficiais pelo objeto ou pela ação, por exemplo, uma sacola aberta para um benefício e um telefone no gancho para encerrar uma ligação. Duas fontes que distribuem SVGs individuais são [Phosphor Icons](https://github.com/phosphor-icons/core) e [Tabler Icons](https://github.com/tabler/tabler-icons).
+
+Escolher uma família com controles que se reconheçam no tamanho do player. Um avatar simbólico basta quando a narrativa pede apenas identificar o contato. Reutilizar o mesmo arquivo na conversa, na chamada e no diretório. Se a aula depender de reconhecer um detalhe de produto ou o rosto de alguém, escolher uma imagem que mostre esse detalhe. Usar o arquivo oficial para a marca.
+
+Guardar com o projeto os SVGs escolhidos, a origem, a versão e o aviso de licença. Preservar o `viewBox` e a proporção ao adaptar cores e tamanho. Usar os mesmos arquivos locais no editor e na exportação. Conferir um quadro exportado no menor tamanho de exibição previsto, inclusive sobre fundos claros e escuros. Deixar espaço entre o ícone e seu rótulo e verificar se os estados da ação continuam distinguíveis.
+
 ### E-mail / Gmail
 Construir uma reprodução educativa com elementos reconhecíveis: remetente, endereço, assunto, corpo, link e ação. Mostrar “Exemplo fictício” dentro do contexto da mensagem, quando necessário, sem transformar o vídeo em slide.
 

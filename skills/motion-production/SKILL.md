@@ -25,6 +25,7 @@ Resolver caminhos dos scripts a partir da pasta desta skill. Gravar produções 
 - Escolher composição e ritmo pelo público e pela finalidade; não aplicar a estética de uma referência a todos os projetos.
 - Fazer a próxima ideia nascer da composição atual quando houver continuidade narrativa. Justificar cortes, trocas de identidade e mudanças reais de assunto.
 - Manter foco e hierarquia. Texto, marca ou dado essencial precisa resolver em um estado legível.
+- Para controles, objetos simples e avatares simbólicos, procurar primeiro um SVG no acervo do projeto ou em uma biblioteca com licença compatível. Reservar ilustração autoral ou fotografia para detalhes específicos da cena. Consultar [seleção e uso de ícones SVG](references/interfaces.md#ícones-svg-reutilizáveis).
 - Derivar cursor, máscara e destaque das coordenadas transformadas do alvo em demonstrações de interface.
 - Preservar texto, geometria autorizada da marca e significado dos dados. Efeitos não podem contradizer o conteúdo.
 - Manter controles de produção fora da imagem final, salvo pedido específico. Não converter um filme em slides por conveniência de implementação.
